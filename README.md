@@ -4,8 +4,6 @@
 <h1 align="center">DFreds Notifications</h1>
 
 <h4 align="center">
-  <a href="https://github.com/new?template_name=dfreds-notifications&template_owner=DFreds">Use Template</a>
-  ·
   <a href="https://discord.gg/Wq8AEV9bWb">Discord</a>
   ·
   <a href="https://dfreds-modules.com">Other Modules</a>
@@ -28,22 +26,20 @@
 </p>
 
 <p align="center">
-    <b>DFreds Notifications</b> is a FoundryVTT module template that uses Typescript and Vite for development.
+    <b>DFreds Notifications</b> is a FoundryVTT module that replaces and expands on the default notifications.
 </p>
 
 ## Features
 
-- Full use of well-defined types provided by [pf2e](https://foundryvtt.com/packages/pf2e)
-- Symlink integration, so you aren't directly messing with the foundry data folder
-- Use of [nvm](https://github.com/nvm-sh/nvm) and npm for node and package management
-- Use of [vite](https://vite.dev/) for building
-- Commands to handle extracting and compiling Foundry compendium packs
-- Commands to build for production, staging, or development
-- Commands to configure and run different versions of FoundryVTT
-- Tools to automatically rename the name of the module, update the types, and enforce code linting
-- Powerful GitHub actions that handle releases, (optionally) posting updates to
-a Discord channel, and optionally publishing the release to Foundry
+- Replaces the default notifications, so everything from Foundry and other modules is rendered by this module automatically
+- Adds a notification history sidebar directory, so you can catch up on anything you missed while looking away
+- Adds developer-defined action buttons to notifications, which remain usable from the history
+- Supports everything the default notifications do, including permanent, progress, and localized messages
+
+<!-- TODO screenshot: notification history sidebar, e.g.
+![Notifications](https://www.dfreds-modules.com/assets/images/notifications.png)
+-->
 
 ## Getting Started
 
-### See the [documentation](https://www.dfreds-modules.com/developers/module-template-ts/) page for details.
+### See the [documentation](https://www.dfreds-modules.com/free-modules/notifications) page for details.
