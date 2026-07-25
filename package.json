@@ -30,9 +30,9 @@
         "node": ">=24.14.1"
     },
     "devDependencies": {
-        "@foundryvtt/foundryvtt-cli": "^3.0.3",
         "@eslint/js": "^10.0.1",
         "@eslint/json": "^1.2.0",
+        "@foundryvtt/foundryvtt-cli": "^3.0.3",
         "@pixi/basis": "7.4.3",
         "@pixi/graphics-smooth": "1.1.1",
         "@pixi/particle-emitter": "5.0.10",
@@ -94,6 +94,6 @@
         "yargs": "^18.0.0"
     },
     "dependencies": {
-        "uuid": "^13.0.0"
+        "izitoast": "^1.4.0"
     }
 }
