@@ -1,16 +1,16 @@
 {
-    "id": "dfreds-module-template-ts",
-    "title": "DFreds Module Template TS",
-    "description": "A FoundryVTT module template using Typescript",
+    "id": "dfreds-notifications",
+    "title": "DFreds Notifications",
+    "description": "A FoundryVTT module that replaces and expands on the default notifications",
     "version": "1.0.0",
     "compatibility": {
         "minimum": 14,
         "verified": 14,
         "maximum": 14
     },
-    "esmodules": ["vendor.mjs", "dfreds-module-template-ts.mjs"],
+    "esmodules": ["vendor.mjs", "dfreds-notifications.mjs"],
     "scripts": [],
-    "styles": ["styles/dfreds-module-template-ts.css"],
+    "styles": ["styles/dfreds-notifications.css"],
     "packs": [],
     "packFolders": [],
     "relationships": {
@@ -32,13 +32,13 @@
         }
     ],
     "socket": false,
-    "url": "https://github.com/DFreds/dfreds-module-template-ts",
-    "manifest": "https://github.com/DFreds/dfreds-module-template-ts/releases/latest/download/module.json",
-    "download": "https://github.com/DFreds/dfreds-module-template-ts/releases/download/v1.0.0/dfreds-module-template-ts.zip",
-    "license": "https://github.com/DFreds/dfreds-module-template-ts/blob/main/LICENSE",
-    "readme": "https://github.com/DFreds/dfreds-module-template-ts/blob/main/README.md",
-    "bugs": "https://github.com/DFreds/dfreds-module-template-ts/issues",
-    "changelog": "https://github.com/DFreds/dfreds-module-template-ts/releases",
+    "url": "https://github.com/DFreds/dfreds-notifications",
+    "manifest": "https://github.com/DFreds/dfreds-notifications/releases/latest/download/module.json",
+    "download": "https://github.com/DFreds/dfreds-notifications/releases/download/v1.0.0/dfreds-notifications.zip",
+    "license": "https://github.com/DFreds/dfreds-notifications/blob/main/LICENSE",
+    "readme": "https://github.com/DFreds/dfreds-notifications/blob/main/README.md",
+    "bugs": "https://github.com/DFreds/dfreds-notifications/issues",
+    "changelog": "https://github.com/DFreds/dfreds-notifications/releases",
     "library": false,
     "media": []
 }

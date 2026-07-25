@@ -1,7 +1,7 @@
 {
-    "name": "dfreds-module-template-ts",
+    "name": "dfreds-notifications",
     "version": "1.0.0",
-    "description": "A FoundryVTT module template using Typescript",
+    "description": "A FoundryVTT module that replaces and expands on the default notifications",
     "private": true,
     "type": "module",
     "scripts": {

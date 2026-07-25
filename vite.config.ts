@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
-const MODULE_ID = "dfreds-module-template-ts";
+const MODULE_ID = "dfreds-notifications";
 
 const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
     const buildMode =
@@ -126,7 +126,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
             port: 30001,
             open: false,
             proxy: {
-                "^(?!/modules/dfreds-module-template-ts/)":
+                "^(?!/modules/dfreds-notifications/)":
                     "http://localhost:30000/",
                 "/socket.io": {
                     target: "ws://localhost:30000",
