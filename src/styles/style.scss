@@ -1,3 +1,201 @@
-.dfreds-notifications {
-    font-size: large;
+.dfreds-notification {
+    // iziToast floats its toasts left, which defeats the wrapper's
+    // text-align: center once a width cap applies
+    float: none;
+    max-width: 60vw;
+
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--color-light-3);
+    font-size: var(--font-size-14);
+    text-shadow: 1px 1px black;
+    box-shadow: 0 0 10px black;
+
+    // iziToast layers its own inset shadow here, shaped for a pale toast
+    &::after {
+        display: none;
+    }
+
+    // iziToast styles everything below via `.iziToast > .iziToast-body .x`, so
+    // the extra classes here are load-bearing - a two-class rule loses to it
+    &.iziToast > .iziToast-body {
+        .iziToast-title,
+        .iziToast-message,
+        .iziToast-icon {
+            color: inherit;
+        }
+
+        .iziToast-buttons {
+            margin-top: 4px;
+        }
+
+        .iziToast-buttons > .dfreds-notification-action {
+            width: auto;
+            line-height: normal;
+            padding: 4px 10px;
+            font-size: var(--font-size-14);
+            color: inherit;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .iziToast-buttons > .dfreds-notification-action:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .iziToast-buttons > .dfreds-notification-action:focus {
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
+        }
+    }
+
+    // The close glyph is a dark base64 image sized by its background
+    &.iziToast > .iziToast-close {
+        filter: invert(1);
+        background-size: 12px;
+    }
+
+    // The type accent is too close to the background to read on warnings
+    &.iziToast > .iziToast-progressbar > div {
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    .dfreds-notification-progress {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+    }
+
+    .dfreds-notification-progress-bar {
+        display: block;
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+    }
+
+    .dfreds-notification-progress-fill {
+        display: block;
+        height: 100%;
+        background: currentcolor;
+        transition: width 200ms ease;
+    }
+}
+
+// The wrapper only insets by 10px 15px, so edge positions need to clear
+// Foundry's UI. These pad the wrapper rather than margin each toast, so the
+// stack shifts once instead of gaining a gap between every notification.
+.iziToast-wrapper.iziToast-wrapper-topRight,
+.iziToast-wrapper.iziToast-wrapper-bottomRight {
+    padding-right: calc(var(--sidebar-width, 300px) + 15px);
+}
+
+// Scene controls are 16px of padding plus 72px of buttons
+.iziToast-wrapper.iziToast-wrapper-bottomLeft {
+    padding-left: calc(104px + 15px);
+}
+
+// Top left additionally has the 200px scene navigation column
+.iziToast-wrapper.iziToast-wrapper-topLeft {
+    padding-left: calc(304px + 15px);
+}
+
+.iziToast-wrapper.iziToast-wrapper-bottomLeft,
+.iziToast-wrapper.iziToast-wrapper-bottomCenter,
+.iziToast-wrapper.iziToast-wrapper-bottomRight {
+    padding-bottom: calc(var(--hotbar-height, 52px) + 10px);
+}
+
+// Both classes are required - the sidebar entries carry the type class too, but
+// only a toast also carries the bare dfreds-notification class
+.dfreds-notification.dfreds-notification-info {
+    --background-color: var(--color-level-info-bg);
+    --border-color: var(--color-level-info);
+}
+
+.dfreds-notification.dfreds-notification-warning {
+    --background-color: var(--color-level-warning-bg);
+    --border-color: var(--color-level-warning);
+
+    color: var(--color-light-2);
+}
+
+.dfreds-notification.dfreds-notification-error {
+    --background-color: var(--color-level-error-bg);
+    --border-color: var(--color-level-error);
+}
+
+.dfreds-notification.dfreds-notification-success {
+    --background-color: var(--color-level-success-bg);
+    --border-color: var(--color-level-success);
+}
+
+.dfreds-notifications-app {
+    .directory-list {
+        padding: 8px;
+    }
+
+    .notification-entry {
+        gap: 6px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        border: 1px solid var(--color-border-light-tertiary, rgb(0 0 0 / 20%));
+        border-radius: 4px;
+    }
+
+    // Core draws the context menu outline square, over a rounded card
+    .notification-entry:is(.context, .active)::after {
+        border-radius: 4px;
+    }
+
+    .notification-entry-header {
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    .notification-entry-icon {
+        flex: none;
+    }
+
+    .notification-entry-message {
+        word-break: break-word;
+        line-height: 1.4;
+    }
+
+    .notification-entry-time {
+        color: var(--color-text-dark-5);
+        font-size: var(--font-size-11);
+    }
+
+    .notification-entry-actions {
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 4px;
+
+        // Only stop the buttons stretching to fill the row - everything else is
+        // left to Foundry's standard button styling
+        button {
+            flex: 0 1 auto;
+            width: auto;
+        }
+    }
+
+    .notification-empty {
+        color: var(--color-text-dark-5);
+        font-style: italic;
+        padding: 12px;
+    }
+
+    .dfreds-notification-warning .notification-entry-icon {
+        color: var(--color-level-warning, orange);
+    }
+
+    .dfreds-notification-error .notification-entry-icon {
+        color: var(--color-level-error, red);
+    }
+
+    .dfreds-notification-success .notification-entry-icon {
+        color: var(--color-level-success, green);
+    }
 }
