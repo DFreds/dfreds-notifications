@@ -4,6 +4,8 @@
 <h1 align="center">DFreds Notifications</h1>
 
 <h4 align="center">
+  <a href="https://foundryvtt.com/packages/dfreds-notifications">Install</a>
+  ·
   <a href="https://discord.gg/Wq8AEV9bWb">Discord</a>
   ·
   <a href="https://dfreds-modules.com">Other Modules</a>
@@ -16,6 +18,10 @@
     <br/>
     <br/>
     <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FDFreds%2Fdfreds-notifications%2Freleases%2Flatest%2Fdownload%2Fmodule.json&query=%24.compatibility.verified&style=for-the-badge&logo=foundryvirtualtabletop&label=Foundry%20Version&color=%23fe6a1f"/>
+    <a href="https://forge-vtt.com/bazaar#package=dfreds-notifications"><img src="https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https://forge-vtt.com/api/bazaar/package/dfreds-notifications&colorB=68a74f&style=for-the-badge&logo=condaforge"/></a>
+    <br/>
+    <img src="https://img.shields.io/github/downloads/DFreds/dfreds-notifications/latest/dfreds-notifications.zip?color=2b82fc&label=LATEST%20DOWNLOADS&style=for-the-badge">
+    <img src="https://img.shields.io/github/downloads/DFreds/dfreds-notifications/total?color=2b82fc&label=TOTAL%20DOWNLOADS&style=for-the-badge">
     <br/>
     <br/>
     <a href="https://www.patreon.com/dfreds"><img src="https://img.shields.io/badge/-Patreon-%23f96854?style=for-the-badge&logo=patreon"/></a>
@@ -33,6 +39,7 @@
 
 - Replaces the default notifications, so everything from Foundry and other modules is rendered by this module automatically
 - Adds a notification history sidebar directory, so you can catch up on anything you missed while looking away
+- Marks the sidebar tab with an unread indicator when something arrives while the history is not visible, which stays until you open it
 - Adds developer-defined action buttons to notifications, which remain usable from the history
 - Supports everything the default notifications do, including permanent, progress, and localized messages
 
