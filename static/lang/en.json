@@ -1,9 +1,42 @@
 {
-    "ModuleTemplate": {
+    "DFredsNotifications": {
+        "AppName": "Notifications",
+        "ClearHistory": "Clear History",
+        "NoNotifications": "No notifications yet this session",
+        "SearchNotifications": "Search Notifications",
+        "Type": {
+            "info": "Info",
+            "warning": "Warning",
+            "error": "Error",
+            "success": "Success"
+        },
         "Settings": {
-            "SampleSetting": {
-                "Name": "Sample Setting Name",
-                "Hint": "Sample setting hint"
+            "Position": {
+                "Name": "Notification Position",
+                "Hint": "Where notifications appear on the screen. Each position is offset so notifications stay clear of the sidebar, scene controls, and hotbar.",
+                "TopLeft": "Top Left",
+                "TopCenter": "Top Center",
+                "TopRight": "Top Right",
+                "Center": "Center",
+                "BottomLeft": "Bottom Left",
+                "BottomCenter": "Bottom Center",
+                "BottomRight": "Bottom Right"
+            },
+            "MaxActive": {
+                "Name": "Maximum Notifications",
+                "Hint": "How many notifications can be displayed at once. Any beyond this are queued and shown as earlier ones dismiss. Queued notifications still appear in the history immediately."
+            },
+            "Duration": {
+                "Name": "Notification Duration (Seconds)",
+                "Hint": "How long a notification is displayed before dismissing itself. Permanent and progress notifications ignore this and stay until closed."
+            },
+            "UnreadPip": {
+                "Name": "Unread Indicator",
+                "Hint": "Which notifications put a dot on the sidebar tab when the history is not visible. The dot stays until you open the tab.",
+                "All": "All Notifications",
+                "Warning": "Warnings and Errors",
+                "Error": "Errors Only",
+                "None": "Never"
             }
         }
     }
