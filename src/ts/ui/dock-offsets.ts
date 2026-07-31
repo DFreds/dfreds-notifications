@@ -22,11 +22,30 @@ function syncDockOffsets(): void {
     style.setProperty("--dfreds-notification-dock-right", toPx(window.innerWidth - right));
     style.setProperty("--dfreds-notification-dock-bottom", toPx(window.innerHeight - bottom));
     style.setProperty("--dfreds-notification-dock-left", toPx(left));
+    style.setProperty("--dfreds-notification-hotbar-height", toPx(measureHotbarHeight(bottom)));
 }
 
 /**
- * Starts re-measuring the game interface whenever it resizes, which covers the
- * dock appearing, minimizing, and hiding, as well as the window resizing.
+ * Measures how far the macro bar rises above the bottom of the game interface.
+ * Core's `--hotbar-height` is a fixed 52px that no longer matches the rendered
+ * bar, which is taller, carries a bottom margin, and scales with the UI.
+ */
+function measureHotbarHeight(interfaceBottom: number): number {
+    const hotbar = document.getElementById("hotbar");
+    if (!hotbar) return 0;
+
+    const { top, width, height } = hotbar.getBoundingClientRect();
+
+    // A hidden bar still has a rect, just an empty one
+    if (width === 0 && height === 0) return 0;
+
+    return interfaceBottom - top;
+}
+
+/**
+ * Starts re-measuring whenever the game interface or the macro bar resizes,
+ * which covers the dock appearing, minimizing, and hiding, the macro bar
+ * switching between its compact and full layouts, and the window resizing.
  * Observing also fires an initial measurement.
  */
 function watchDockOffsets(): void {
@@ -39,6 +58,9 @@ function watchDockOffsets(): void {
 
     observer.disconnect();
     observer.observe(gameInterface);
+
+    const hotbar = document.getElementById("hotbar");
+    if (hotbar) observer.observe(hotbar);
 }
 
 /**

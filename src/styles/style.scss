@@ -119,7 +119,7 @@
 .iziToast-wrapper.iziToast-wrapper-bottomLeft,
 .iziToast-wrapper.iziToast-wrapper-bottomCenter,
 .iziToast-wrapper.iziToast-wrapper-bottomRight {
-    --dfreds-notification-ui-bottom: var(--hotbar-height, 52px);
+    --dfreds-notification-ui-bottom: var(--dfreds-notification-hotbar-height, 76px);
 }
 
 // Both classes are required - the sidebar entries carry the type class too, but
