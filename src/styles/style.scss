@@ -83,28 +83,43 @@
     }
 }
 
-// The wrapper only insets by 10px 15px, so edge positions need to clear
-// Foundry's UI. These pad the wrapper rather than margin each toast, so the
-// stack shifts once instead of gaining a gap between every notification.
+// The wrapper is fixed to the viewport and only insets by 10px 15px, so it has
+// to clear two things: the A/V camera dock, which sits outside `#interface` and
+// so shrinks it away from one viewport edge, and the Foundry UI inside it. The
+// two are summed through variables because a second padding rule would replace
+// the first rather than add to it. Padding the wrapper rather than each toast
+// shifts the stack once, instead of gaining a gap between every notification.
+.iziToast-wrapper {
+    --dfreds-notification-ui-top: 0px;
+    --dfreds-notification-ui-right: 0px;
+    --dfreds-notification-ui-bottom: 0px;
+    --dfreds-notification-ui-left: 0px;
+
+    padding-block: calc(10px + var(--dfreds-notification-dock-top, 0px) + var(--dfreds-notification-ui-top))
+        calc(10px + var(--dfreds-notification-dock-bottom, 0px) + var(--dfreds-notification-ui-bottom));
+    padding-inline: calc(15px + var(--dfreds-notification-dock-left, 0px) + var(--dfreds-notification-ui-left))
+        calc(15px + var(--dfreds-notification-dock-right, 0px) + var(--dfreds-notification-ui-right));
+}
+
 .iziToast-wrapper.iziToast-wrapper-topRight,
 .iziToast-wrapper.iziToast-wrapper-bottomRight {
-    padding-right: calc(var(--sidebar-width, 300px) + 15px);
+    --dfreds-notification-ui-right: var(--sidebar-width, 300px);
 }
 
 // Scene controls are 16px of padding plus 72px of buttons
 .iziToast-wrapper.iziToast-wrapper-bottomLeft {
-    padding-left: calc(104px + 15px);
+    --dfreds-notification-ui-left: 104px;
 }
 
 // Top left additionally has the 200px scene navigation column
 .iziToast-wrapper.iziToast-wrapper-topLeft {
-    padding-left: calc(304px + 15px);
+    --dfreds-notification-ui-left: 304px;
 }
 
 .iziToast-wrapper.iziToast-wrapper-bottomLeft,
 .iziToast-wrapper.iziToast-wrapper-bottomCenter,
 .iziToast-wrapper.iziToast-wrapper-bottomRight {
-    padding-bottom: calc(var(--hotbar-height, 52px) + 10px);
+    --dfreds-notification-ui-bottom: var(--hotbar-height, 52px);
 }
 
 // Both classes are required - the sidebar entries carry the type class too, but
