@@ -7,8 +7,7 @@ import { NotificationHistory } from "./notification-history.ts";
  */
 function getNotificationHistory(): NotificationHistory | undefined {
     return foundry.applications.instances.get(NotificationHistory.tabName) as unknown as
-        | NotificationHistory
-        | undefined;
+        NotificationHistory | undefined;
 }
 
 export { getNotificationHistory };
