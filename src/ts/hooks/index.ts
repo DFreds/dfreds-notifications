@@ -1,4 +1,5 @@
 import { CameraDock } from "./cameraDock.ts";
+import { HotReload } from "./hot-reload.ts";
 import { Init } from "./init.ts";
 import { Setup } from "./setup.ts";
 import { Sidebar } from "./sidebar.ts";
@@ -10,7 +11,7 @@ interface Listener {
 
 const HooksNotifications: Listener = {
     listen(): void {
-        const listeners: Listener[] = [Init, UiExtenderInit, Setup, Sidebar, CameraDock];
+        const listeners: Listener[] = [HotReload, Init, UiExtenderInit, Setup, Sidebar, CameraDock];
 
         for (const listener of listeners) {
             listener.listen();
