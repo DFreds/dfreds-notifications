@@ -12,22 +12,21 @@ class Settings {
     #UNREAD_PIP = "unreadPip";
 
     register(): void {
-        const positions: Record<string, string> = {};
-        positions["topLeft"] = game.i18n.localize("DFredsNotifications.Settings.Position.TopLeft");
-        positions["topCenter"] = game.i18n.localize("DFredsNotifications.Settings.Position.TopCenter");
-        positions["topRight"] = game.i18n.localize("DFredsNotifications.Settings.Position.TopRight");
-        positions["center"] = game.i18n.localize("DFredsNotifications.Settings.Position.Center");
-        positions["bottomLeft"] = game.i18n.localize("DFredsNotifications.Settings.Position.BottomLeft");
-        positions["bottomCenter"] = game.i18n.localize("DFredsNotifications.Settings.Position.BottomCenter");
-        positions["bottomRight"] = game.i18n.localize("DFredsNotifications.Settings.Position.BottomRight");
-
         game.settings.register(MODULE_ID, this.#POSITION, {
             name: "DFredsNotifications.Settings.Position.Name",
             hint: "DFredsNotifications.Settings.Position.Hint",
             scope: "client",
             config: true,
             default: "topCenter",
-            choices: positions,
+            choices: {
+                topLeft: game.i18n.localize("DFredsNotifications.Settings.Position.TopLeft"),
+                topCenter: game.i18n.localize("DFredsNotifications.Settings.Position.TopCenter"),
+                topRight: game.i18n.localize("DFredsNotifications.Settings.Position.TopRight"),
+                center: game.i18n.localize("DFredsNotifications.Settings.Position.Center"),
+                bottomLeft: game.i18n.localize("DFredsNotifications.Settings.Position.BottomLeft"),
+                bottomCenter: game.i18n.localize("DFredsNotifications.Settings.Position.BottomCenter"),
+                bottomRight: game.i18n.localize("DFredsNotifications.Settings.Position.BottomRight"),
+            },
             type: String,
         });
 
@@ -57,21 +56,18 @@ class Settings {
             }),
         });
 
-        const unreadPipLevels: Record<string, string> = {};
-        unreadPipLevels[UNREAD_PIP_LEVELS.ALL] = game.i18n.localize("DFredsNotifications.Settings.UnreadPip.All");
-        unreadPipLevels[UNREAD_PIP_LEVELS.WARNING] = game.i18n.localize(
-            "DFredsNotifications.Settings.UnreadPip.Warning",
-        );
-        unreadPipLevels[UNREAD_PIP_LEVELS.ERROR] = game.i18n.localize("DFredsNotifications.Settings.UnreadPip.Error");
-        unreadPipLevels[UNREAD_PIP_LEVELS.NONE] = game.i18n.localize("DFredsNotifications.Settings.UnreadPip.None");
-
         game.settings.register(MODULE_ID, this.#UNREAD_PIP, {
             name: "DFredsNotifications.Settings.UnreadPip.Name",
             hint: "DFredsNotifications.Settings.UnreadPip.Hint",
             scope: "client",
             config: true,
             default: UNREAD_PIP_LEVELS.ALL,
-            choices: unreadPipLevels,
+            choices: {
+                [UNREAD_PIP_LEVELS.ALL]: game.i18n.localize("DFredsNotifications.Settings.UnreadPip.All"),
+                [UNREAD_PIP_LEVELS.WARNING]: game.i18n.localize("DFredsNotifications.Settings.UnreadPip.Warning"),
+                [UNREAD_PIP_LEVELS.ERROR]: game.i18n.localize("DFredsNotifications.Settings.UnreadPip.Error"),
+                [UNREAD_PIP_LEVELS.NONE]: game.i18n.localize("DFredsNotifications.Settings.UnreadPip.None"),
+            },
             type: String,
         });
     }
