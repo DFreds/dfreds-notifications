@@ -54,7 +54,7 @@ interface ManagedNotification extends Notification {
     toastEl?: HTMLDivElement;
 }
 
-const CONSOLE_METHODS: Record<NotificationType, string> = {
+const CONSOLE_METHODS: Record<NotificationType, "info" | "warn" | "error"> = {
     info: "info",
     warning: "warn",
     error: "error",
@@ -412,13 +412,7 @@ class NotificationManager {
     #logToConsole(notification: ManagedNotification): void {
         if (!notification.console) return;
 
-        const method = CONSOLE_METHODS[notification.type];
-        const fn = method in console ? method : "log";
-
-        (console as unknown as Record<string, (...args: any[]) => void>)[fn](
-            `${MODULE_ID} |`,
-            notification.error ?? notification.message,
-        );
+        console[CONSOLE_METHODS[notification.type]](`${MODULE_ID} |`, notification.error ?? notification.message);
     }
 
     /* -------------------------------------------- */
