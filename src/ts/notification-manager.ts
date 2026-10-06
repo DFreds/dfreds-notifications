@@ -403,10 +403,9 @@ class NotificationManager {
     }
 
     #escapeValues(format: NotificationOptions["format"]): Record<string, string> {
-        return Object.entries(format ?? {}).reduce<Record<string, string>>((escaped, [key, value]) => {
-            escaped[key] = foundry.utils.escapeHTML(value);
-            return escaped;
-        }, {});
+        return Object.fromEntries(
+            Object.entries(format ?? {}).map(([key, value]) => [key, foundry.utils.escapeHTML(value)]),
+        );
     }
 
     #logToConsole(notification: ManagedNotification): void {
