@@ -54,6 +54,8 @@ interface ManagedNotification extends Notification {
     toastEl?: HTMLDivElement;
 }
 
+const MAX_HISTORY = 200;
+
 const CONSOLE_METHODS: Record<NotificationType, "info" | "warn" | "error"> = {
     info: "info",
     warning: "warn",
@@ -419,8 +421,6 @@ class NotificationManager {
     /* -------------------------------------------- */
 
     #pushHistory(notification: ManagedNotification): void {
-        const maxHistory = 200;
-
         this.#history.set(notification.id, {
             id: notification.id,
             type: notification.type,
@@ -430,11 +430,8 @@ class NotificationManager {
             notification,
         });
 
-        // A Map iterates in insertion order, so the first key is the oldest
-        while (this.#history.size > maxHistory) {
-            const oldest = this.#history.keys().next().value;
-            if (oldest === undefined) break;
-
+        if (this.#history.size > MAX_HISTORY) {
+            const [oldest] = this.#history.keys();
             this.#history.delete(oldest);
         }
 
