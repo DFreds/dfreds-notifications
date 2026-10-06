@@ -33,9 +33,6 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
 
     static override tabName: string = "dfredsNotifications";
 
-    /** How often, in milliseconds, to update timestamps */
-    static UPDATE_TIMESTAMP_FREQUENCY = 1000 * 10;
-
     static override DEFAULT_OPTIONS: DeepPartial<ApplicationConfiguration> = {
         classes: ["directory", "flexcol", "dfreds-notifications-app"],
         window: {
@@ -84,7 +81,7 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
 
         if (this.isPopout) return;
 
-        setInterval(this.#updateTimestamps.bind(this), NotificationHistory.UPDATE_TIMESTAMP_FREQUENCY);
+        setInterval(this.#updateTimestamps.bind(this), 10_000);
     }
 
     protected override _onActivate(): void {
