@@ -2,7 +2,7 @@ import type { Notification } from "@client/applications/ui/notifications.mjs";
 import { libWrapper } from "@static/lib/shim.ts";
 import { MODULE_ID } from "../constants.ts";
 import { error } from "../logger.ts";
-import { NotificationType, NotifyOptions, notificationManager } from "../notification-manager.ts";
+import { NotificationType, NotificationUpdate, NotifyOptions, notificationManager } from "../notification-manager.ts";
 import { Listener } from "./index.ts";
 
 /**
@@ -56,9 +56,9 @@ const Setup: Listener = {
                 MODULE_ID,
                 "foundry.applications.ui.Notifications.prototype.update",
                 function (
-                    wrapped: (notification: number | Notification, update: { message?: string; pct?: number }) => void,
+                    wrapped: (notification: number | Notification, update: NotificationUpdate) => void,
                     notification: number | Notification,
-                    update: { message?: string; pct?: number },
+                    update: NotificationUpdate,
                 ): void {
                     if (notificationManager.has(notification)) {
                         notificationManager.update(notification, update);
