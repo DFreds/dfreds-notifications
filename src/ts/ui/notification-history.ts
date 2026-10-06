@@ -158,14 +158,7 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
         notificationManager.clearHistory();
     }
 
-    static async #onRunAction(...args: any[]): Promise<void> {
-        const [, target] = args as [PointerEvent, HTMLElement];
-        const thisClass = this as unknown as NotificationHistory;
-
-        return thisClass._onRunAction(target);
-    }
-
-    _onRunAction(target: HTMLElement): void {
+    static async #onRunAction(_event: PointerEvent, target: HTMLElement): Promise<void> {
         const id = Number(target.dataset.notificationId);
         const index = Number(target.dataset.actionIndex);
 
