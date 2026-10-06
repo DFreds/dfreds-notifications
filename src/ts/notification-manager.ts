@@ -467,5 +467,5 @@ class NotificationManager {
  */
 const notificationManager = new NotificationManager();
 
-export { NotificationManager, notificationManager };
+export { ICONS, NotificationManager, notificationManager };
 export type { HistoryEntry, NotificationAction, NotificationType, NotificationUpdate, NotifyOptions };

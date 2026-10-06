@@ -1,7 +1,7 @@
 import type { ApplicationConfiguration, ApplicationRenderContext } from "@client/applications/_types.mjs";
 import type { HandlebarsRenderOptions } from "@client/applications/api/_module.mjs";
 import { MODULE_ID } from "../constants.ts";
-import { HistoryEntry, NotificationType, notificationManager } from "../notification-manager.ts";
+import { HistoryEntry, ICONS, NotificationType, notificationManager } from "../notification-manager.ts";
 import type { ContextMenuEntry } from "@client/applications/ux/context-menu.mjs";
 import { clearUnread } from "./unread-pip.ts";
 
@@ -17,13 +17,6 @@ interface HistoryRow {
     timestamp: string;
     actions: { index: number; label: string; icon?: string }[];
 }
-
-const ICONS: Record<NotificationType, string> = {
-    info: "fa-solid fa-circle-info",
-    warning: "fa-solid fa-triangle-exclamation",
-    error: "fa-solid fa-circle-exclamation",
-    success: "fa-solid fa-check",
-};
 
 /**
  * A sidebar tab listing the notifications shown this session, so a user who
