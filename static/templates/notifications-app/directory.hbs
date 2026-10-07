@@ -1,6 +1,6 @@
 <ol class="directory-list plain">
     {{#each entries}}
-        <li class="directory-item entry notification-entry flexcol dfreds-notification-{{this.type}}" data-entry-id="{{this.id}}">
+        <li class="directory-item entry notification-entry flexcol dfreds-notification-{{this.type}}{{#if this.muted}} muted{{/if}}" data-entry-id="{{this.id}}">
             <div class="notification-entry-header flexrow">
                 <i class="notification-entry-icon {{this.icon}}"></i>
                 <span class="notification-entry-message">{{{this.message}}}</span>

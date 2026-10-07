@@ -2,6 +2,8 @@
     "DFredsNotifications": {
         "AppName": "Notifications",
         "ClearHistory": "Clear History",
+        "Mute": "Mute",
+        "Unmute": "Unmute",
         "NoNotifications": "No notifications yet this session",
         "SearchNotifications": "Search Notifications",
         "Type": {

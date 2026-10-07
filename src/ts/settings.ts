@@ -10,6 +10,7 @@ class Settings {
     #MAX_ACTIVE = "maxActive";
     #DURATION = "duration";
     #UNREAD_PIP = "unreadPip";
+    #MUTED_MESSAGES = "mutedMessages";
 
     register(): void {
         game.settings.register(MODULE_ID, this.#POSITION, {
@@ -70,6 +71,14 @@ class Settings {
             },
             type: String,
         });
+
+        game.settings.register(MODULE_ID, this.#MUTED_MESSAGES, {
+            name: "Muted Messages",
+            scope: "client",
+            config: false,
+            default: [],
+            type: Array,
+        });
     }
 
     /**
@@ -109,6 +118,26 @@ class Settings {
      */
     get unreadPipLevel(): UnreadPipLevel {
         return game.settings.get(MODULE_ID, this.#UNREAD_PIP) as unknown as UnreadPipLevel;
+    }
+
+    /**
+     * Returns the game setting for messages that are recorded in the history
+     * but never displayed
+     *
+     * @returns the raw message or localization key of each muted notification
+     */
+    get mutedMessages(): string[] {
+        return game.settings.get(MODULE_ID, this.#MUTED_MESSAGES) as unknown as string[];
+    }
+
+    /**
+     * Sets the game setting for muted messages
+     *
+     * @param messages The raw message or localization key of each muted notification
+     * @returns a promise that resolves when the setting is saved
+     */
+    async setMutedMessages(messages: string[]): Promise<unknown> {
+        return game.settings.set(MODULE_ID, this.#MUTED_MESSAGES, messages);
     }
 }
 

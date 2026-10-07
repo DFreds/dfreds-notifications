@@ -40,6 +40,7 @@
 - Replaces the default notifications, so everything from Foundry and other modules is rendered by this module automatically
 - Adds a notification history sidebar directory, so you can catch up on anything you missed while looking away
 - Marks the sidebar tab with an unread indicator when something arrives while the history is not visible, which stays until you open it
+- Mutes specific messages from the history, so repeated ones stop popping up but are still recorded
 - Adds developer-defined action buttons to notifications, which remain usable from the history
 - Supports everything the default notifications do, including permanent, progress, and localized messages
 

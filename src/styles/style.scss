@@ -164,6 +164,10 @@
         border-radius: 4px;
     }
 
+    .notification-entry.muted {
+        opacity: 0.5;
+    }
+
     .notification-entry-header {
         align-items: baseline;
         gap: 8px;

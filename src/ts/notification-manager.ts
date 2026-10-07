@@ -42,6 +42,7 @@ interface HistoryEntry {
     id: number;
     type: NotificationType;
     message: string;
+    muteKey: string;
     timestamp: number;
     actions: NotificationAction[];
     notification: Notification;
@@ -151,6 +152,7 @@ class NotificationManager {
      */
     notify(message: string | object, type: NotificationType = "info", options: NotifyOptions = {}): Notification {
         const resolved = this.#resolveMessage(message, options);
+        const muteKey = typeof message === "string" ? message : String(message);
 
         this.#nextId += 1;
 
@@ -172,8 +174,14 @@ class NotificationManager {
         notification.remove = (): void => this.remove(notification);
         notification.update = (update: NotificationUpdate): void => this.update(notification, update);
 
+        this.#pushHistory(notification, muteKey);
+
+        if (this.#isMuted(muteKey)) {
+            this.#logToConsole(notification);
+            return notification;
+        }
+
         this.#byId.set(notification.id, notification);
-        this.#pushHistory(notification);
         this.#enqueue(notification);
 
         return notification;
@@ -420,11 +428,12 @@ class NotificationManager {
     /*  History                                     */
     /* -------------------------------------------- */
 
-    #pushHistory(notification: ManagedNotification): void {
+    #pushHistory(notification: ManagedNotification, muteKey: string): void {
         this.#history.set(notification.id, {
             id: notification.id,
             type: notification.type,
             message: notification.message,
+            muteKey,
             timestamp: notification.timestamp,
             actions: notification.actions,
             notification,
@@ -436,7 +445,7 @@ class NotificationManager {
         }
 
         this.#onHistoryChange?.();
-        this.#onNotify?.(notification.type);
+        if (!this.#isMuted(muteKey)) this.#onNotify?.(notification.type);
     }
 
     #syncHistory(notification: ManagedNotification): void {
@@ -445,6 +454,10 @@ class NotificationManager {
 
         entry.message = notification.message;
         this.#onHistoryChange?.();
+    }
+
+    #isMuted(muteKey: string): boolean {
+        return this.#settings.mutedMessages.includes(muteKey);
     }
 
     #idOf(notification: number | Notification): number {

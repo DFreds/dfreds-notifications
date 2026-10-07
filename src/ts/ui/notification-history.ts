@@ -3,6 +3,7 @@ import type { HandlebarsRenderOptions } from "@client/applications/api/_module.m
 import { MODULE_ID } from "../constants.ts";
 import { HistoryEntry, ICONS, NotificationType, notificationManager } from "../notification-manager.ts";
 import type { ContextMenuEntry } from "@client/applications/ux/context-menu.mjs";
+import { Settings } from "../settings.ts";
 import { clearUnread } from "./unread-pip.ts";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -15,6 +16,7 @@ interface HistoryRow {
     message: string;
     timeSince: string;
     timestamp: string;
+    muted: boolean;
     actions: { index: number; label: string; icon?: string }[];
 }
 
@@ -101,18 +103,55 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
     }
 
     _getEntryContextOptions(): ContextMenuEntry[] {
+        const settings = new Settings();
+        const isMuted = (target: HTMLElement): boolean => {
+            const entry = this.#entryFrom(target);
+            return !!entry && settings.mutedMessages.includes(entry.muteKey);
+        };
+
         return [
+            {
+                label: "DFredsNotifications.Mute",
+                icon: "fa-solid fa-bell-slash",
+                visible: (target: HTMLElement) => !isMuted(target),
+                onClick: async (_event: PointerEvent, target: HTMLElement) => {
+                    const entry = this.#entryFrom(target);
+                    if (!entry) return;
+
+                    await settings.setMutedMessages([...settings.mutedMessages, entry.muteKey]);
+                    this.refresh();
+                },
+            },
+            {
+                label: "DFredsNotifications.Unmute",
+                icon: "fa-solid fa-bell",
+                visible: isMuted,
+                onClick: async (_event: PointerEvent, target: HTMLElement) => {
+                    const entry = this.#entryFrom(target);
+                    if (!entry) return;
+
+                    await settings.setMutedMessages(
+                        settings.mutedMessages.filter((message) => message !== entry.muteKey),
+                    );
+                    this.refresh();
+                },
+            },
             {
                 label: "SIDEBAR.Delete",
                 icon: "fa-solid fa-trash",
                 onClick: (_event: PointerEvent, target: HTMLElement) => {
-                    const id = Number(target.closest<HTMLElement>("[data-entry-id]")?.dataset.entryId);
-                    if (!Number.isFinite(id)) return;
+                    const entry = this.#entryFrom(target);
+                    if (!entry) return;
 
-                    notificationManager.removeFromHistory(id);
+                    notificationManager.removeFromHistory(entry.id);
                 },
             },
         ];
+    }
+
+    #entryFrom(target: HTMLElement): HistoryEntry | undefined {
+        const id = Number(target.closest<HTMLElement>("[data-entry-id]")?.dataset.entryId);
+        return notificationManager.getHistoryEntry(id);
     }
 
     #updateTimestamps(): void {
@@ -130,10 +169,14 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
     }
 
     #buildRows(): HistoryRow[] {
-        return notificationManager.history.toReversed().map((entry) => this.#buildRow(entry));
+        const mutedMessages = new Settings().mutedMessages;
+
+        return notificationManager.history
+            .toReversed()
+            .map((entry) => this.#buildRow(entry, mutedMessages.includes(entry.muteKey)));
     }
 
-    #buildRow(entry: HistoryEntry): HistoryRow {
+    #buildRow(entry: HistoryEntry, muted: boolean): HistoryRow {
         const date = new Date(entry.timestamp);
 
         return {
@@ -143,6 +186,7 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
             message: entry.message,
             timeSince: foundry.utils.timeSince(date),
             timestamp: date.toLocaleString(),
+            muted,
             actions: entry.actions.map((action, index) => ({
                 index,
                 label: action.label,
