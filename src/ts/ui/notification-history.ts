@@ -206,7 +206,8 @@ class NotificationHistory extends HandlebarsApplicationMixin(AbstractSidebarTab)
         const entry = notificationManager.getHistoryEntry(id);
         if (!entry) return;
 
-        entry.actions[index]?.callback(target, entry.notification);
+        const action = entry.actions[index];
+        if (action) notificationManager.runAction(action, target, entry.notification);
     }
 }
 

@@ -2,6 +2,7 @@ import iziToastModule from "izitoast";
 import type { IziToast, IziToastPosition, IziToastSettings } from "izitoast";
 import type { Notification, NotificationOptions } from "@client/applications/ui/notifications.mjs";
 import { MODULE_ID } from "./constants.ts";
+import { error } from "./logger.ts";
 import { Settings } from "./settings.ts";
 
 const iziToast = iziToastModule as unknown as IziToast;
@@ -118,6 +119,20 @@ class NotificationManager {
      */
     getHistoryEntry(id: number): HistoryEntry | undefined {
         return this.#history.get(id);
+    }
+
+    /**
+     * Runs an action's callback, logging anything it throws or rejects with so
+     * a broken callback cannot stop the caller.
+     */
+    runAction(action: NotificationAction, element: HTMLElement, notification: Notification): void {
+        const logFailure = (err: unknown) => error(`Notification action "${action.label}" failed: ${err}`);
+        try {
+            const result: unknown = action.callback(element, notification);
+            if (result instanceof Promise) result.catch(logFailure);
+        } catch (err) {
+            logFailure(err);
+        }
     }
 
     /**
@@ -345,7 +360,7 @@ class NotificationManager {
             return [
                 html,
                 (instance, toast): void => {
-                    action.callback(toast, notification);
+                    this.runAction(action, toast, notification);
                     if (action.dismissOnClick !== false) {
                         instance.hide(notification.settings, toast, "button");
                     }
