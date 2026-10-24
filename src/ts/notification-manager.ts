@@ -338,8 +338,9 @@ class NotificationManager {
 
     #buildButtons(notification: ManagedNotification): IziToastSettings["buttons"] {
         return notification.actions.map((action) => {
-            const icon = action.icon ? `<i class="${action.icon}"></i> ` : "";
-            const html = `<button type="button" class="dfreds-notification-action">${icon}${action.label}</button>`;
+            const icon = action.icon ? `<i class="${foundry.utils.escapeHTML(action.icon)}"></i> ` : "";
+            const label = foundry.utils.escapeHTML(action.label);
+            const html = `<button type="button" class="dfreds-notification-action">${icon}${label}</button>`;
 
             return [
                 html,
