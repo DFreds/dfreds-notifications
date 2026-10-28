@@ -44,9 +44,7 @@
 - Adds developer-defined action buttons to notifications, which remain usable from the history
 - Supports everything the default notifications do, including permanent, progress, and localized messages
 
-<!-- TODO screenshot: notification history sidebar, e.g.
-![Notifications](https://www.dfreds-modules.com/assets/images/notifications.png)
--->
+![Notifications](https://www.dfreds-modules.com/assets/images/notifications-4fce3130a61ef6edd7b8ce163d0c649c.png)
 
 ## Getting Started
 
