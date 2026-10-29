@@ -270,8 +270,12 @@ class NotificationManager {
      * Applies a message or progress update to a displayed notification.
      */
     update(notification: number | Notification, update: NotificationUpdate): void {
-        const managed = this.#byId.get(this.#idOf(notification));
-        if (!managed) return;
+        const id = this.#idOf(notification);
+        const managed = this.#byId.get(id);
+        if (!managed) {
+            this.#updateHistoryOnly(id, update);
+            return;
+        }
 
         const { message, pct } = update;
 
@@ -470,6 +474,14 @@ class NotificationManager {
 
         entry.message = notification.message;
         this.#onHistoryChange?.();
+    }
+
+    #updateHistoryOnly(id: number, update: NotificationUpdate): void {
+        const notification = this.#history.get(id)?.notification as ManagedNotification | undefined;
+        if (!notification || !update.message) return;
+
+        notification.message = this.#resolveMessage(update.message, update);
+        this.#syncHistory(notification);
     }
 
     #isMuted(muteKey: string): boolean {
