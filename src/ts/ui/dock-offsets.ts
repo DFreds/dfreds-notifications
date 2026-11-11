@@ -23,6 +23,21 @@ function syncDockOffsets(): void {
     style.setProperty("--dfreds-notification-dock-bottom", toPx(window.innerHeight - bottom));
     style.setProperty("--dfreds-notification-dock-left", toPx(left));
     style.setProperty("--dfreds-notification-hotbar-height", toPx(measureHotbarHeight(bottom)));
+    style.setProperty("--dfreds-notification-sidebar-width", toPx(measureSidebarWidth(right)));
+}
+
+/**
+ * Measures how far the sidebar, including its tab buttons, reaches in from the
+ * right of the game interface. It changes when the sidebar collapses or expands.
+ */
+function measureSidebarWidth(interfaceRight: number): number {
+    const sidebar = document.getElementById("sidebar");
+    if (!sidebar) return 0;
+
+    const { left, width, height } = sidebar.getBoundingClientRect();
+    if (width === 0 && height === 0) return 0;
+
+    return interfaceRight - left;
 }
 
 /**
@@ -43,9 +58,10 @@ function measureHotbarHeight(interfaceBottom: number): number {
 }
 
 /**
- * Starts re-measuring whenever the game interface or the macro bar resizes,
- * which covers the dock appearing, minimizing, and hiding, the macro bar
- * switching between its compact and full layouts, and the window resizing.
+ * Starts re-measuring whenever the game interface, the macro bar, or the
+ * sidebar resizes, which covers the dock appearing, minimizing, and hiding, the
+ * macro bar switching between its compact and full layouts, the sidebar
+ * collapsing or expanding, and the window resizing.
  * Observing also fires an initial measurement.
  */
 function watchDockOffsets(): void {
@@ -61,6 +77,9 @@ function watchDockOffsets(): void {
 
     const hotbar = document.getElementById("hotbar");
     if (hotbar) observer.observe(hotbar);
+
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar) observer.observe(sidebar);
 }
 
 /**

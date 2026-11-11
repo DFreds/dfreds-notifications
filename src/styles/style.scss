@@ -103,7 +103,7 @@
 
 .iziToast-wrapper.iziToast-wrapper-topRight,
 .iziToast-wrapper.iziToast-wrapper-bottomRight {
-    --dfreds-notification-ui-right: var(--sidebar-width, 300px);
+    --dfreds-notification-ui-right: var(--dfreds-notification-sidebar-width, var(--sidebar-width, 300px));
 }
 
 // Scene controls are 16px of padding plus 72px of buttons
