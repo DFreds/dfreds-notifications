@@ -427,9 +427,9 @@ class NotificationManager {
             clean = false;
         }
 
-        const localized = game.i18n.localize(raw, data);
+        const text = localize || format ? game.i18n.localize(raw, data) : raw;
 
-        return clean ? foundry.utils.cleanHTML(localized) : localized;
+        return clean ? foundry.utils.cleanHTML(text) : text;
     }
 
     #escapeValues(format: NotificationOptions["format"]): Record<string, string> {
