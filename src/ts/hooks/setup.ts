@@ -54,6 +54,17 @@ const Setup: Listener = {
 
             libWrapper.register(
                 MODULE_ID,
+                "foundry.applications.ui.Notifications.prototype.has",
+                function (
+                    wrapped: (notification: number | Notification) => boolean,
+                    notification: number | Notification,
+                ): boolean {
+                    return notificationManager.has(notification) || wrapped(notification);
+                },
+            );
+
+            libWrapper.register(
+                MODULE_ID,
                 "foundry.applications.ui.Notifications.prototype.update",
                 function (
                     wrapped: (notification: number | Notification, update: NotificationUpdate) => void,
