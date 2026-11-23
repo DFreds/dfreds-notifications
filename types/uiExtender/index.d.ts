@@ -7,14 +7,32 @@ declare global {
     }
 
     /**
-     * The UiExtender class
+     * The UiExtender class. Call the register methods inside the
+     * `uiExtender.init` hook. Registrations made after Foundry's `setup` hook
+     * are ignored.
      */
     export interface UiExtender {
         /**
-         * Register a scene control
+         * Register a scene control: a new button in the scene controls with
+         * its own set of tools
          * @param input The scene control input
          */
         registerSceneControl(input: SceneControlInput): void;
+
+        /**
+         * Register a tool on a scene control
+         * @param input The scene control tool input
+         * @deprecated Since 2.7.0. Registering a tool with `registerSceneControl`
+         * is deprecated. Use {@link UiExtender.registerSceneControlTool}.
+         * Removed in 3.0.0.
+         */
+        registerSceneControl(input: SceneControlToolInput): void;
+
+        /**
+         * Register a tool on a scene control
+         * @param input The scene control tool input
+         */
+        registerSceneControlTool(input: SceneControlToolInput): void;
 
         /**
          * Register a HUD button
@@ -42,9 +60,113 @@ declare global {
         moduleId: string;
 
         /**
-         * The name of the control layer
+         * The name of the scene control to insert this one before. Takes
+         * precedence over both `after` and `control.order`. If no scene control
+         * with this name exists, falls back to `after`, then `control.order`,
+         * then the end of the scene controls.
          */
-        name: "tokens" | "tiles" | "drawings" | "walls" | "lighting" | "sounds" | "regions" | "notes";
+        before?: string;
+
+        /**
+         * The name of the scene control to insert this one after. Takes
+         * precedence over `control.order`. If no scene control with this name
+         * exists, falls back to `control.order`, then the end of the scene
+         * controls.
+         */
+        after?: string;
+
+        /**
+         * Whether the scene control is only shown to GM users
+         */
+        gmOnly?: boolean;
+
+        /**
+         * The predicate to determine if the scene control should be added
+         *
+         * @param data The data for the controls
+         * @returns true if the scene control should be added, false otherwise
+         */
+        predicate?: (data: any) => boolean;
+
+        /**
+         * The scene control data
+         */
+        control: SceneControlData;
+    }
+
+    export interface SceneControlData {
+        /**
+         * A unique identifier for the scene control
+         */
+        name: string;
+
+        /**
+         * An integer indicating the scene control's order, with 0 being at the
+         * top. If not provided, the scene control will be added to the end.
+         */
+        order?: number;
+
+        /**
+         * A title for the scene control: can be a localization path
+         */
+        title: string;
+
+        /**
+         * One or more icon classes for the scene control, typically Font
+         * Awesome classes such as "fa-solid fa-face-smile"
+         */
+        icon: string;
+
+        /**
+         * The name of the canvas layer activated with this scene control, such
+         * as "walls"
+         */
+        layer: string;
+
+        /**
+         * The name of the tool that is active when the scene control is first
+         * opened. If not provided, the first tool that is not a toggle or a
+         * button is used.
+         */
+        activeTool?: string;
+
+        /**
+         * A callback invoked when the scene control is activated or deactivated
+         */
+        onChange?: (event: Event, active: boolean) => void;
+
+        /**
+         * A callback invoked when a tool is activated or deactivated
+         */
+        onToolChange?: (event: Event, tool: SceneControlToolData, active: boolean) => void;
+
+        /**
+         * The tools of the scene control. A tool without an `order` is ordered
+         * by its position in this list.
+         */
+        tools: SceneControlToolData[];
+    }
+
+    export interface SceneControlToolInput {
+        /**
+         * The ID of the module registering
+         */
+        moduleId: string;
+
+        /**
+         * The name of the scene control to add the tool to. This can be a
+         * Foundry scene control or one registered with `registerSceneControl`.
+         */
+        name:
+            | "tokens"
+            | "tiles"
+            | "drawings"
+            | "walls"
+            | "lighting"
+            | "sounds"
+            | "regions"
+            | "notes"
+            | (string & {});
 
         /**
          * The predicate to determine if the control should be visible
@@ -57,10 +179,10 @@ declare global {
         /**
          * The tool data
          */
-        tool: SceneControlToolInput;
+        tool: SceneControlToolData;
     }
 
-    export interface SceneControlToolInput {
+    export interface SceneControlToolData {
         /* An identifier for the tool, unique among the tools of its SceneControl. This should be camelCase for maximum compatibility. */
         name: string;
         /** An integer indicating the tool's order, with 0 being at the top. If not provided, the tool will be added to the end of the list. */

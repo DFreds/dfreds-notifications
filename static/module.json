@@ -20,7 +20,7 @@
                 "id": "lib-dfreds-ui-extender",
                 "type": "module",
                 "compatibility": {
-                    "verified": "2.6.1"
+                    "verified": "2.7.0"
                 }
             }
         ],
